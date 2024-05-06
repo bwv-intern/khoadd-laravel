@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\AuthController;
+use App\Http\Controllers\{AuthController, TodoController};
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -25,3 +25,7 @@ Route::post('/login', [AuthController::class, 'attemptLogin']);
 Route::get('/register', [AuthController::class, 'viewRegister']);
 Route::post('/register', [AuthController::class, 'attemptRegister']);
 Route::any('/logout', [AuthController::class, 'logout']);
+
+Route::get('/todos/new', [TodoController::class, 'viewTodoCreate'])->middleware('auth');
+Route::post('/todos/new', [TodoController::class, 'createTodo'])->middleware('auth');
+Route::get('/todos/{todo}', [TodoController::class, 'viewTodo'])->name('todo');
