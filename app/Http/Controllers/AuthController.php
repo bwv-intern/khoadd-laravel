@@ -4,15 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\{Auth, Hash, Validator};
 use Illuminate\Validation\Rules\Password;
 
 class AuthController extends Controller
 {
-    public function attemptLogin(Request $request)
-    {
+    public function attemptLogin(Request $request) {
         $validation = Validator::make($request->all(), [
             'email' => 'required|string|email',
             'password' => 'required|string',
@@ -30,7 +27,7 @@ class AuthController extends Controller
         // error_log(join(', ', $validation->validated()));
         $isLoginOK = Auth::attempt($validated);
 
-        if (!$isLoginOK) {
+        if (! $isLoginOK) {
             return view('login', [
                 'previousEmail' => $validated['email'],
                 'errorMessage' => 'Incorrect email or password',
@@ -40,8 +37,7 @@ class AuthController extends Controller
         return redirect('home');
     }
 
-    public function attemptRegister(Request $request)
-    {
+    public function attemptRegister(Request $request) {
         $validation = Validator::make($request->all(), [
             'email' => 'required|unique:users|string|email',
             'name' => 'required|string',
@@ -67,8 +63,7 @@ class AuthController extends Controller
         return redirect('home');
     }
 
-    public function viewLogin(Request $request)
-    {
+    public function viewLogin(Request $request) {
         if (Auth::check()) {
             return redirect('home');
         }
@@ -76,8 +71,7 @@ class AuthController extends Controller
         return view('login');
     }
 
-    public function viewRegister(Request $request)
-    {
+    public function viewRegister(Request $request) {
         if (Auth::check()) {
             return redirect('home');
         }
@@ -85,8 +79,7 @@ class AuthController extends Controller
         return view('register');
     }
 
-    public function logout(Request $request)
-    {
+    public function logout(Request $request) {
         if (Auth::check()) {
             Auth::logout();
         }
