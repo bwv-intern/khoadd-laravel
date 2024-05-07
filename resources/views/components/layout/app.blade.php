@@ -14,8 +14,8 @@
 </head>
 
 <body>
-    <x-alert></x-alert>
     <x-navbar></x-navbar>
+    <x-alert></x-alert>
 </body>
 
 </html>

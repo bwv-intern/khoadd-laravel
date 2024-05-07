@@ -21,15 +21,15 @@ Route::get('/', function () {
 Route::view('/home', 'home')->name('home');
 
 Route::get('/login', [AuthController::class, 'viewLogin'])->name('login');
-Route::post('/login', [AuthController::class, 'attemptLogin']);
+Route::post('/login', [AuthController::class, 'submitLogin']);
 Route::get('/register', [AuthController::class, 'viewRegister'])->name('register');
-Route::post('/register', [AuthController::class, 'attemptRegister']);
-Route::any('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::post('/register', [AuthController::class, 'submitRegister']);
+Route::any('/logout', [AuthController::class, 'submitLogout'])->name('logout');
 
-Route::get('/todos/new', [TodoController::class, 'viewTodoCreate'])->middleware('auth');
-Route::post('/todos/new', [TodoController::class, 'createTodo'])->middleware('auth');
+Route::get('/todos/new', [TodoController::class, 'viewTodoCreate'])->middleware('auth')->name('createTodo');
+Route::post('/todos/new', [TodoController::class, 'submitTodoCreate'])->middleware('auth');
 Route::get('/todos/{id}', [TodoController::class, 'viewTodo'])->name('viewTodo');
 Route::get('/todos', [TodoController::class, 'viewAllTodos'])->name('viewAllTodos');
-Route::put('/todos/{id}', [TodoController::class, 'updateTodoSubmit'])->name('updateTodo');
-Route::delete('/todos/{id}', [TodoController::class, 'deleteTodoSubmit'])->name('deleteTodo');
-Route::post('/todos/restore/{id}', [TodoController::class, 'restoreTodoSubmit'])->name('restoreTodo');
+Route::put('/todos/{id}', [TodoController::class, 'submitUpdateTodo'])->name('updateTodo');
+Route::delete('/todos/{id}', [TodoController::class, 'submitDeleteTodo'])->name('deleteTodo');
+Route::post('/todos/restore/{id}', [TodoController::class, 'submitRestoreTodo'])->name('restoreTodo');

@@ -9,7 +9,7 @@ use Illuminate\Validation\Rules\Password;
 
 class AuthController extends Controller
 {
-    public function attemptLogin(Request $request)
+    public function submitLogin(Request $request)
     {
         $validated = $request->validate([
             'email' => 'required|string|email',
@@ -19,16 +19,15 @@ class AuthController extends Controller
         $isLoginOK = Auth::attempt($validated);
 
         if (!$isLoginOK) {
-            return view('login', [
-                'previousEmail' => $validated['email'],
-                'errorMessage' => 'Incorrect email or password',
-            ]);
+            return redirect()->back()
+                ->withInput()
+                ->withErrors(['auth-validation' => 'Incorrect username or password.']);
         }
 
         return redirect('home');
     }
 
-    public function attemptRegister(Request $request)
+    public function submitRegister(Request $request)
     {
         $validated = $request->validate([
             'email' => 'required|unique:users|string|email',
@@ -63,7 +62,7 @@ class AuthController extends Controller
         return view('register');
     }
 
-    public function logout(Request $request)
+    public function submitLogout(Request $request)
     {
         if (Auth::check()) {
             Auth::logout();

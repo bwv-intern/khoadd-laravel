@@ -13,7 +13,7 @@
             <button type="button" class="btn btn-primary" id='restoreBtn'>Restore</button>
             @else
             <button type="button" class="btn btn-primary" id='updateBtn'>Update</button>
-            <button type="button" class="btn btn-primary" id='deleteBtn'>Delete</button>
+            <button type="button" class="btn btn-danger" id='deleteBtn'>Delete</button>
             @endif
         @endif
         </div>
@@ -24,16 +24,6 @@
 </div>
 
 <script>
-    // $(document).ajaxStart(function() {
-    //     console.log('loading');
-    //     $('#spinner').show();
-    //     $('#buttonRow').hide();
-    // })
-    // .ajaxStop(function() {
-    //     console.log('done');
-    //     $('#spinner').hide();
-    //     $('#buttonRow').show();
-    // });
     $('#updateBtn').click(function () {
         var csrfToken = $('input[name="_token"]')[0].value;
         var newTodoText = $('#todoText').first().val();
@@ -51,6 +41,12 @@
             complete: function() {
                 $('#spinner').hide();
                 $('#buttonRow').show();
+            },
+            success: function() {
+                alert("Todo updated.");
+            },
+            error: function() {
+                alert("Something went wrong, please try again later.")
             }
         });
     });

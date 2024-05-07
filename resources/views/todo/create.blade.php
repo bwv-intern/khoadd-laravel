@@ -2,7 +2,7 @@
 @section('content')
 <div>
     <h1>Have something on your mind?</h1>
-    <form action="/todos/new" method="post">
+    <form action="{{route('createTodo')}}" method="post">
         @csrf
         <label for="todoText">Todo text</label><br>
         <textarea name="todoText" id="todoText"

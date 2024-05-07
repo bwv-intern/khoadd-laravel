@@ -19,7 +19,7 @@ class TodoController extends Controller
         return view('todo.create');
     }
 
-    public function createTodo(Request $request)
+    public function submitTodoCreate(Request $request)
     {
         $validated = $request->validate([
             'todoText' => 'required',
@@ -50,7 +50,7 @@ class TodoController extends Controller
         return view('todo.viewAll', compact('todoPaginator'));
     }
 
-    public function updateTodoSubmit(Request $request, int $id)
+    public function submitUpdateTodo(Request $request, int $id)
     {
         $validated = $request->validate([
             'todoText' => 'required',
@@ -61,14 +61,14 @@ class TodoController extends Controller
         return response(htmlspecialchars($todo->todoText));
     }
 
-    public function deleteTodoSubmit(Request $request, int $id)
+    public function submitDeleteTodo(Request $request, int $id)
     {
         $this->todoRepo->delete($id);
 
         return response(status: Response::HTTP_NO_CONTENT);
     }
 
-    public function restoreTodoSubmit(Request $request, int $id)
+    public function submitRestoreTodo(Request $request, int $id)
     {
         $this->todoRepo->restore($id);
 

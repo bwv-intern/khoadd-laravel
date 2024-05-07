@@ -6,10 +6,10 @@
     <h2>Search options</h2>
     <form action="{{route('viewAllTodos')}}" method="get">
         <label for="search">Search</label><br>
-        <input type="text" name="search" id="search" placeholder="Your search here..."><br>
+        <input type="text" name="search" id="search" placeholder="Your search here..." value="{{app('request')->input('search') ?? ''}}"><br>
         <label for="limit">Page limit</label><br>
-        <input type="number" min="5" max="20" name="limit" id="limit" placeholder="Set your page limit here..." value="5"><br>
-        <input type="submit"><br>
+        <input type="number" min="5" max="20" name="limit" id="limit" placeholder="Set your page limit here..." value="{{app('request')->input('limit') ?? 5}}"><br>
+        <button type="submit" class="btn btn-primary">Search</button><br>
     </form>
     <h2>Search result</h2>
     @foreach($todoPaginator as $todo)
