@@ -1,7 +1,4 @@
-@include('layouts.app')
-
-@section('title', 'Home')
-
+<x-layout.app title="Home"></x-layout.app>
 @section('content')
 
 <div>

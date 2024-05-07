@@ -9,25 +9,16 @@ use Illuminate\Validation\Rules\Password;
 
 class AuthController extends Controller
 {
-    public function attemptLogin(Request $request) {
-        $validation = Validator::make($request->all(), [
+    public function attemptLogin(Request $request)
+    {
+        $validated = $request->validate([
             'email' => 'required|string|email',
             'password' => 'required|string',
         ]);
 
-        if ($validation->fails()) {
-            return view('login', [
-                'previousEmail' => $request->all()['email'],
-                'errorMessage' => $validation->errors()->first(),
-            ]);
-        }
-
-        $validated = $validation->validated();
-
-        // error_log(join(', ', $validation->validated()));
         $isLoginOK = Auth::attempt($validated);
 
-        if (! $isLoginOK) {
+        if (!$isLoginOK) {
             return view('login', [
                 'previousEmail' => $validated['email'],
                 'errorMessage' => 'Incorrect email or password',
@@ -37,22 +28,13 @@ class AuthController extends Controller
         return redirect('home');
     }
 
-    public function attemptRegister(Request $request) {
-        $validation = Validator::make($request->all(), [
+    public function attemptRegister(Request $request)
+    {
+        $validated = $request->validate([
             'email' => 'required|unique:users|string|email',
             'name' => 'required|string',
             'password' => ['required', 'string', 'confirmed', Password::min(8)],
         ]);
-
-        if ($validation->fails()) {
-            return view('register', [
-                'previousEmail' => $request->all()['email'],
-                'previousName' => $request->all()['name'],
-                'errorMessage' => $validation->errors()->first(),
-            ]);
-        }
-
-        $validated = $validation->validated();
 
         $validated['password'] = Hash::make($validated['password']);
 
@@ -63,7 +45,8 @@ class AuthController extends Controller
         return redirect('home');
     }
 
-    public function viewLogin(Request $request) {
+    public function viewLogin(Request $request)
+    {
         if (Auth::check()) {
             return redirect('home');
         }
@@ -71,7 +54,8 @@ class AuthController extends Controller
         return view('login');
     }
 
-    public function viewRegister(Request $request) {
+    public function viewRegister(Request $request)
+    {
         if (Auth::check()) {
             return redirect('home');
         }
@@ -79,7 +63,8 @@ class AuthController extends Controller
         return view('register');
     }
 
-    public function logout(Request $request) {
+    public function logout(Request $request)
+    {
         if (Auth::check()) {
             Auth::logout();
         }

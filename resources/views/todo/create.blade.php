@@ -1,9 +1,5 @@
-@include('layouts.app')
-
-@section('title', 'Create a todo')
-
+<x-layout.app title="Create a todo"></x-layout.app>
 @section('content')
-
 <div>
     <h1>Have something on your mind?</h1>
     <form action="/todos/new" method="post">
@@ -15,9 +11,6 @@
         <br>
         <input type="submit"><br>
     </form>
-    @isset($errorMessage)
-    <h2>{{$errorMessage}}</h2>
-    @endisset
 
     <!-- It is quality rather than quantity that matters. - Lucius Annaeus Seneca -->
 </div>

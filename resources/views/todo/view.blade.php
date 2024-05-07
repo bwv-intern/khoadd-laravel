@@ -1,7 +1,4 @@
-@include('layouts.app')
-
-@section('title', "Todo #{$todo['id']}")
-
+<x-layout.app :title="'Todo #' . $todo['id']"></x-layout.app>
 @section('content')
 
 <div>

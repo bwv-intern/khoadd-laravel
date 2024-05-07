@@ -1,7 +1,4 @@
-@include('layouts.app')
-
-@section('title', 'Sign in')
-
+<x-layout.app title="Login"></x-layout.app>
 @section('content')
 
 <div>
@@ -9,17 +6,12 @@
     <form action="/login" method="post">
         @csrf
         <label for="email">Email</label><br>
-        <input type="text" name="email" id="email" placeholder="Your email here..." 
-        @if(!empty($previousEmail))
-            value={{$previousEmail}}
-        @endif><br>
+        <input type="email" name="email" id="email" placeholder="Your email here..." 
+            value={{old('email')}}><br>
         <label for="password">Password</label><br>
         <input type="password" name="password" id="password" placeholder="Your password here..."><br>
         <input type="submit"><br>
     </form>
-    @isset($errorMessage)
-        <h2>{{$errorMessage}}</h2>
-    @endisset
 
     <!-- It is quality rather than quantity that matters. - Lucius Annaeus Seneca -->
 </div>
