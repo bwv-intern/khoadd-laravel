@@ -3,7 +3,7 @@
 
 <div class="container">
     <h1>Register a new account</h1>
-    <form action="{{route('register')}}" method="post">
+    <form action="{{route('register')}}" method="post" id="registerForm">
         @csrf
         <label for="email">Email</label><br>
         <input type="email" name="email" id="email" placeholder="Your email here..." 
@@ -17,6 +17,31 @@
         <input type="password" name="password_confirmation" id="password_confirmation" placeholder="Repeat password here..."><br>
         <button type="submit" class="btn btn-primary">Register</button><br>
     </form>
+    <script>
+        $("#registerForm").validate(
+            {
+                rules: {
+                    email: {
+                        required: true,
+                        email: true,
+                    },
+                    name: {
+                        required: true,
+                        minlength: 4,
+                    },
+                    password: {
+                        required: true,
+                        minlength: 8,
+                    },
+                    password_confirmation: {
+                        required: true,
+                        minlength: 8,
+                        equalTo: "#password",
+                    }
+                }
+            }
+        );
+    </script>
 
     <!-- It is quality rather than quantity that matters. - Lucius Annaeus Seneca -->
 </div>

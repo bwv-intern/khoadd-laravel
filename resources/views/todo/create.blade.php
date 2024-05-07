@@ -2,7 +2,7 @@
 @section('content')
 <div class="container">
     <h1>Have something on your mind?</h1>
-    <form action="{{route('createTodo')}}" method="post">
+    <form action="{{route('createTodo')}}" method="post" id="createTodoForm">
         @csrf
         <label for="todoText">Todo text</label><br>
         <textarea name="todoText" id="todoText"
@@ -11,6 +11,17 @@
         <br>
         <button type="submit" class="btn btn-primary">Create todo</button><br>
     </form>
+    <script>
+        $("#createTodoForm").validate(
+            {
+                rules: {
+                    todoText: {
+                        required: true,
+                    },
+                }
+            }
+        );
+    </script>
 
     <!-- It is quality rather than quantity that matters. - Lucius Annaeus Seneca -->
 </div>

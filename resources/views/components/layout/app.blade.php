@@ -15,6 +15,7 @@
 
     <!-- jQueryvalidation -->
     <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/additional-methods.js" crossorigin="anonymous"></script>
 </head>
 
 <body>

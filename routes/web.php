@@ -33,3 +33,6 @@ Route::get('/todos', [TodoController::class, 'viewAllTodos'])->name('viewAllTodo
 Route::put('/todos/{id}', [TodoController::class, 'submitUpdateTodo'])->name('updateTodo');
 Route::delete('/todos/{id}', [TodoController::class, 'submitDeleteTodo'])->name('deleteTodo');
 Route::post('/todos/restore/{id}', [TodoController::class, 'submitRestoreTodo'])->name('restoreTodo');
+
+Route::view('/validator', 'validator')->name('validator');
+Route::post('/validator', function(){/*dedicated server validating function here later*/});
