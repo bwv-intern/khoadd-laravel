@@ -18,13 +18,13 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::view('/home', 'home');
+Route::view('/home', 'home')->name('home');
 
 Route::get('/login', [AuthController::class, 'viewLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'attemptLogin']);
-Route::get('/register', [AuthController::class, 'viewRegister']);
+Route::get('/register', [AuthController::class, 'viewRegister'])->name('register');
 Route::post('/register', [AuthController::class, 'attemptRegister']);
-Route::any('/logout', [AuthController::class, 'logout']);
+Route::any('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::get('/todos/new', [TodoController::class, 'viewTodoCreate'])->middleware('auth');
 Route::post('/todos/new', [TodoController::class, 'createTodo'])->middleware('auth');
