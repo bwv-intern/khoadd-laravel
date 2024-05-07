@@ -3,6 +3,7 @@
 
 <div>
     <h1>Todos</h1>
+    @auth <a href="{{route('createTodo')}}">Or create a new one now</a> @endauth
     <h2>Search options</h2>
     <form action="{{route('viewAllTodos')}}" method="get">
         <label for="search">Search</label><br>
@@ -13,7 +14,7 @@
     </form>
     <h2>Search result</h2>
     @foreach($todoPaginator as $todo)
-    <a href="{{route('viewTodo', ['id' => $todo->id]);}}">Todo #{{$todo->id}}</a><br>
+    <a href="{{route('viewTodo', ['id' => $todo->id]);}}">Todo #{{$todo->id}} @if($todo->freshness === app\Models\Freshness::New->value) (new) @endif</a><br>
     @endforeach
 
     {{$todoPaginator->links();}}

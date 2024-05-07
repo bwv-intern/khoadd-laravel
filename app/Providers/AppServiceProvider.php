@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use App\Models\Todo;
+use App\Observers\TodoObserver;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -16,5 +19,7 @@ class AppServiceProvider extends ServiceProvider
      * Bootstrap any application services.
      */
     public function boot(): void {
+        Todo::observe(TodoObserver::class);
+        Paginator::useBootstrapFour();
     }
 }
