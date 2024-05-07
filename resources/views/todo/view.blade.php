@@ -1,7 +1,7 @@
 <x-layout.app :title="'Todo #' . $todo['id']"></x-layout.app>
 @section('content')
 
-<div>
+<div class="container">
     <h1>Todo #{{$todo['id']}}</h1>
     <form>
         @csrf

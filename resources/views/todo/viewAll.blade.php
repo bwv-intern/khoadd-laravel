@@ -1,7 +1,7 @@
 <x-layout.app title="Todos"></x-layout.app>
 @section('content')
 
-<div>
+<div class="container">
     <h1>Todos</h1>
     @auth <a href="{{route('createTodo')}}">Or create a new one now</a> @endauth
     <h2>Search options</h2>

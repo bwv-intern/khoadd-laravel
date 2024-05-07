@@ -1,7 +1,7 @@
 <x-layout.app title="Signup"></x-layout.app>
 @section('content')
 
-<div>
+<div class="container">
     <h1>Register a new account</h1>
     <form action="{{route('register')}}" method="post">
         @csrf

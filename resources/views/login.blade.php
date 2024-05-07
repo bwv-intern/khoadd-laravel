@@ -1,7 +1,7 @@
 <x-layout.app title="Login"></x-layout.app>
 @section('content')
 
-<div>
+<div class="container">
     <h1>Log in to your account</h1>
     <form action="{{route('login')}}" method="post">
         @csrf
