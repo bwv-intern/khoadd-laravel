@@ -30,3 +30,6 @@ Route::get('/todos/new', [TodoController::class, 'viewTodoCreate'])->middleware(
 Route::post('/todos/new', [TodoController::class, 'createTodo'])->middleware('auth');
 Route::get('/todos/{id}', [TodoController::class, 'viewTodo'])->name('viewTodo');
 Route::get('/todos', [TodoController::class, 'viewAllTodos'])->name('viewAllTodos');
+Route::put('/todos/{id}', [TodoController::class, 'updateTodoSubmit'])->name('updateTodo');
+Route::delete('/todos/{id}', [TodoController::class, 'deleteTodoSubmit'])->name('deleteTodo');
+Route::post('/todos/restore/{id}', [TodoController::class, 'restoreTodoSubmit'])->name('restoreTodo');

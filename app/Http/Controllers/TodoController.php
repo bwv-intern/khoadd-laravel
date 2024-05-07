@@ -3,10 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Interfaces\ITodoRepository;
-use App\Models\Todo;
-use App\Repositories\TodoRepository;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\Response;
 
 class TodoController extends Controller
 {
@@ -50,5 +48,30 @@ class TodoController extends Controller
         $todoPaginator->withPath(url()->current())->withQueryString();
 
         return view('todo.viewAll', compact('todoPaginator'));
+    }
+
+    public function updateTodoSubmit(Request $request, int $id)
+    {
+        $validated = $request->validate([
+            'todoText' => 'required',
+        ]);
+
+        $todo = $this->todoRepo->update($id, $validated);
+
+        return response(htmlspecialchars($todo->todoText));
+    }
+
+    public function deleteTodoSubmit(Request $request, int $id)
+    {
+        $this->todoRepo->delete($id);
+
+        return response(status: Response::HTTP_NO_CONTENT);
+    }
+
+    public function restoreTodoSubmit(Request $request, int $id)
+    {
+        $this->todoRepo->restore($id);
+
+        return response(status: Response::HTTP_NO_CONTENT);
     }
 }

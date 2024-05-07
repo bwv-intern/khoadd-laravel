@@ -8,4 +8,5 @@ interface ITodoRepository {
     public function create(array $details);
     public function update(int $id, array $details);
     public function delete(int $id);
+    public function restore(int $id);
 }
