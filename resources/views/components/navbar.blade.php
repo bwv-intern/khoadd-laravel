@@ -29,6 +29,9 @@
         <li class="nav-item">
             <a class="nav-link" href="{{route('validator')}}">Validator</a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{route('lodash')}}">Lodash</a>
+        </li>
       </ul>
     </div>
 </nav>

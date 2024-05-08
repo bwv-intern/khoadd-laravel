@@ -26,6 +26,7 @@ Route::get('/register', [AuthController::class, 'viewRegister'])->middleware('gu
 Route::post('/register', [AuthController::class, 'submitRegister'])->middleware('guest');
 Route::any('/logout', [AuthController::class, 'submitLogout'])->middleware('auth')->name('logout');
 Route::any('/profile', [AuthController::class, 'viewProfile'])->middleware('auth')->name('profile');
+Route::view('/lodash', 'lodash')->middleware('auth')->name('lodash');
 
 Route::get('/todos/new', [TodoController::class, 'viewTodoCreate'])->middleware('auth')->name('createTodo');
 Route::post('/todos/new', [TodoController::class, 'submitTodoCreate'])->middleware('auth');
