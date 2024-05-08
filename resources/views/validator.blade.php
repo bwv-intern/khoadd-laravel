@@ -4,48 +4,49 @@
 <div class="container">
     <h1>Validation testing page</h1>
     <!-- Simplicity is the ultimate sophistication. - Leonardo da Vinci -->
-    <form class="cmxform" id="validatorForm" method="POST" action="{{route('validator')}}">
+    <form class="cmxform" id="validatorForm" method="POST" action="{{route('validatorSubmit')}}">
+        @csrf
         <fieldset>
           <legend>Please fill in this form below.</legend>
           <p>
-            <label for="shortName">Short name (required, at most 5 characters, characters only)</label>
-            <input type="text" id="shortName" name="shortName">
+            <label for="shortName">Short name (required, at most 5 characters, ascii characters only)</label>
+            <input type="text" id="shortName" name="shortName" value="{{old('shortName')}}">
           </p>
           <p>
-            <label for="longName">Long name (required, at least 10 characters, characters only)</label>
-            <input type="text" id="longName" name="longName">
-        </p>
+            <label for="longName">Long name (required, at least 10 characters, ascii characters only)</label>
+            <input type="text" id="longName" name="longName" value="{{old('longName')}}">
+          </p>
           <p>
-            <label for="anyString">Any string (required, between 5 and 20 characters, alphanumerics only)</label>
-            <input id="anyString" type="text" name="anyString">
+            <label for="anyString">Any string (required, between 5 and 20 characters, ascii alphanumerics only)</label>
+            <input id="anyString" type="text" name="anyString" value="{{old('anyString')}}">
           </p>
           <p>
             <label for="url">URL (required, must resemble a URL)</label>
-            <input id="url" type="url" name="url">
+            <input id="url" type="url" name="url" value="{{old('url')}}">
           </p>
           <p>
-            <label for="spellcard">Spellcard (required, at most 50 characters, must contain "Sign", alphanumerics only)</label>
-            <input id="spellcard" type="text" name="spellcard">
+            <label for="spellcard">Spellcard (required, at most 50 characters, must contain "Sign", ascii alphanumerics only)</label>
+            <input id="spellcard" type="text" name="spellcard" value="{{old('spellcard')}}">
           </p>
           <p>
-            <label for="phone">Phone number (required, exactly 10 characters, digits only)</label>
-            <input id="phone" type="tel" name="phone">
+            <label for="phone">VN Phone number (required, exactly 9 characters (no region code), digits only)</label>
+            <input id="phone" type="tel" name="phone" value="{{old('phone')}}">
           </p>
           <p>
             <label for="email">Email (required, must resemble an email address)</label>
-            <input id="email" type="email" name="email">
+            <input id="email" type="email" name="email" value="{{old('email')}}">
           </p>
           <p>
             <label for="age">Age (must be 18 or greater, digits only)</label>
-            <input id="age" type="number" name="email">
+            <input id="age" type="number" name="age" value="{{old('age')}}">
           </p>
           <p>
             <label for="dateOfBirth">Date of birth (must be before the year 2000)</label>
-            <input id="age" type="number" name="email">
+            <input id="dateOfBirth" type="date" name="dateOfBirth" value="{{old('dateOfBirth')}}">
           </p>
           <p>
             <label for="skipClientValidation"> Skip client-side validation</label>
-            <input id="skipClientValidation" type="checkbox" name="skipClientValidation">
+            <input id="skipClientValidation" type="checkbox" name="skipClientValidation" {{old('skipClientValidation') == 'on'? 'checked' : ''}}>
           </p>          
           <p>
             <button class="btn btn-primary" type="submit">Submit</button>
@@ -55,10 +56,24 @@
       <script>
         jQuery.validator.addMethod("isSpellcard", function(value, elm) {
             return this.optional(elm) || /^.*Sign.*/.test(value);
-        }, "Must contain \"Sign\". Please refer to any Touhou spellcard with \"Sign\".")
-      $("#validatorForm").validate(
+        }, "Please include \"Sign\".");
+        jQuery.validator.addMethod("isVNPhone", function(value, elm) {
+            return this.optional(elm) || /^[1-9][0-9]{8}/.test(value);
+        }, "Please provide a VN phone number.");
+        jQuery.validator.addMethod("dateBefore2000", function(value, elm) {
+            return this.optional(elm) || (Date.parse("01 Jan 2000") > new Date(value));
+        }, "Please provide a time before the year 2000.");
+        $('#skipClientValidation').on("change", function () {
+          if ($('#skipClientValidation').prop('checked')) {
+            $("#validatorForm").validate().settings.ignore = "*";
+          }
+          else {
+            $("#validatorForm").validate().settings.ignore = ":hidden";
+          }
+        })
+        $("#validatorForm").validate(
         {
-            // debug: !$('#skipClientValidation').checked,
+            ignore: $('#skipClientValidation').prop('checked')? "*" : ":hidden",
             rules: {
                 shortName: {
                     required: true,
@@ -72,7 +87,6 @@
                 },
                 anyString: {
                     required: true,
-                    lettersonly: true,
                     minlength: 5,
                     maxlength: 20,
                     alphanumeric: true,
@@ -83,8 +97,23 @@
                 },
                 spellcard: {
                     required: true,
-                    // maxlengh: 50,
+                    maxlength: 50,
                     isSpellcard: true,
+                },
+                phone: {
+                    required: true,
+                    digits: true,
+                    isVNPhone: true,
+                },
+                age: {
+                    required: true,
+                    digits: true,
+                    min: 18,
+                },
+                dateOfBirth: {
+                    required: true,
+                    dateISO: true,
+                    dateBefore2000: true,
                 }
             },
         }

@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\{AuthController, TodoController};
+use App\Http\Controllers\{AuthController, TodoController, ValidatorController};
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -35,4 +35,4 @@ Route::delete('/todos/{id}', [TodoController::class, 'submitDeleteTodo'])->name(
 Route::post('/todos/restore/{id}', [TodoController::class, 'submitRestoreTodo'])->name('restoreTodo');
 
 Route::view('/validator', 'validator')->name('validator');
-Route::post('/validator', function(){/*dedicated server validating function here later*/});
+Route::post('/validatorCheck', [ValidatorController::class, 'submitForm'])->name('validatorSubmit');
