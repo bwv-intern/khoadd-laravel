@@ -54,11 +54,17 @@
         </fieldset>
       </form>
       <script>
+        jQuery.validator.addMethod("lettersonlynd", function(value, elm) {
+            return this.optional(elm) || /^[a-z]+$/i.test(value);
+        }, "Please only use ascii letters.");
+        jQuery.validator.addMethod("alphanumericnd", function(value, elm) {
+            return this.optional(elm) || /^[a-z0-9]+$/i.test(value);
+        }, "Please only use ascii letters and numbers.");
         jQuery.validator.addMethod("isSpellcard", function(value, elm) {
-            return this.optional(elm) || /^.*Sign.*/.test(value);
+            return this.optional(elm) || /^.*Sign.*$/.test(value);
         }, "Please include \"Sign\".");
         jQuery.validator.addMethod("isVNPhone", function(value, elm) {
-            return this.optional(elm) || /^[1-9][0-9]{8}/.test(value);
+            return this.optional(elm) || /^[1-9][0-9]{8}$/.test(value);
         }, "Please provide a VN phone number.");
         jQuery.validator.addMethod("dateBefore2000", function(value, elm) {
             return this.optional(elm) || (Date.parse("01 Jan 2000") > new Date(value));
@@ -77,19 +83,18 @@
             rules: {
                 shortName: {
                     required: true,
-                    lettersonly: true,
+                    lettersonlynd: true,
                     maxlength: 5,
                 },
                 longName: {
                     required: true,
-                    lettersonly: true,
+                    lettersonlynd: true,
                     minlength: 10
                 },
                 anyString: {
                     required: true,
                     minlength: 5,
                     maxlength: 20,
-                    alphanumeric: true,
                 },
                 url: {
                     required: true,
