@@ -26,6 +26,9 @@
         <li class="nav-item">
             <a class="nav-link" href="{{route('viewAllTodos')}}">Todos</a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{route('validator')}}">Validator</a>
+        </li>
       </ul>
     </div>
 </nav>

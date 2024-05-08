@@ -15,7 +15,7 @@ class ValidatorController extends Controller
             'url' => ['required', 'url'],
             'spellcard' => ['required', 'max:50', 'regex:/^.*Sign.*/'],
             'phone' => ['required', 'digits:9', 'regex:/^[1-9][0-9]{8}/'],
-            'age' => ['required', 'integer', 'min:18'],
+            'age' => ['required', 'numerics', 'min:18'],
             'dateOfBirth' => ['required', 'date', 'before:01 Jan 2000'],
         ]);
 
