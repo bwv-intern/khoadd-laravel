@@ -25,8 +25,8 @@
 
 <script>
     $('#updateBtn').click(function () {
-        var csrfToken = $('input[name="_token"]')[0].value;
-        var newTodoText = $('#todoText').first().val();
+        let csrfToken = $('input[name="_token"]')[0].value;
+        let newTodoText = $('#todoText').first().val();
         $.ajax({
             url: "{{route('updateTodo', ['id' => $todo['id']])}}", 
             type: "put", 
@@ -51,7 +51,7 @@
         });
     });
     $('#deleteBtn').click(function () {
-        var csrfToken = $('input[name="_token"]')[0].value;
+        let csrfToken = $('input[name="_token"]')[0].value;
         $.ajax({url: "{{route('deleteTodo', ['id' => $todo['id']])}}", 
         type: "delete", 
         data: {
@@ -70,7 +70,7 @@
             }});
     });
     $('#restoreBtn').click(function () {
-        var csrfToken = $('input[name="_token"]')[0].value;
+        let csrfToken = $('input[name="_token"]')[0].value;
         $.ajax({url: "{{route('restoreTodo', ['id' => $todo['id']])}}", 
         type: "post", 
         data: {
