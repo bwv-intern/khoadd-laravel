@@ -22,18 +22,22 @@
                 rules: {
                     email: {
                         required: true,
+                        requiredHard: true,
                         email: true,
                     },
                     name: {
                         required: true,
+                        requiredHard: true,
                         minlength: 4,
                     },
                     password: {
                         required: true,
+                        requiredHard: true,
                         minlength: 8,
                     },
                     password_confirmation: {
                         required: true,
+                        requiredHard: true,
                         minlength: 8,
                         equalTo: "#password",
                     }

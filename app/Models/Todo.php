@@ -2,40 +2,38 @@
 
 namespace App\Models;
 
+use DateTime;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\{Model, SoftDeletes};
 
 class Todo extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory;
+    use SoftDeletes;
 
     protected $guarded = [];
 
-    protected function casts()
-    {
+    protected function casts() {
         return [
             'updated_at' => 'date',
         ];
     }
 
-    protected function freshness(): Attribute
-    {
+    protected function freshness(): Attribute {
         return Attribute::make(
             get: function (mixed $value, array $attributes) {
-                $current_dt = new \DateTime();
+                $current_dt = new DateTime();
                 $elapsed_time = $this->updated_at->diff()->days;
                 if ($elapsed_time < 2) {
                     return Freshness::New->value;
                 }
-                else if ($elapsed_time < 5) {
+                if ($elapsed_time < 5) {
                     return Freshness::Stale->value;
                 }
-                else {
-                    return Freshness::Old->value;
-                }
-            }
+
+                return Freshness::Old->value;
+            },
         );
     }
 }

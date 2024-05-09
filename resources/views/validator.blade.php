@@ -82,40 +82,48 @@
             rules: {
                 shortName: {
                     required: true,
+                    requiredHard: true,
                     lettersonlynd: true,
                     maxlength: 5,
                 },
                 longName: {
                     required: true,
+                    requiredHard: true,
                     lettersonlynd: true,
                     minlength: 10
                 },
                 anyString: {
                     required: true,
+                    requiredHard: true,
                     minlength: 5,
                     maxlength: 20,
                 },
                 url: {
                     required: true,
+                    requiredHard: true,
                     url: true,
                 },
                 spellcard: {
                     required: true,
+                    requiredHard: true,
                     maxlength: 50,
                     isSpellcard: true,
                 },
                 phone: {
                     required: true,
+                    requiredHard: true,
                     digits: true,
                     isVNPhone: true,
                 },
                 age: {
                     required: true,
+                    requiredHard: true,
                     digits: true,
                     min: 18,
                 },
                 dateOfBirth: {
                     required: true,
+                    requiredHard: true,
                     dateISO: true,
                     dateBefore2000: true,
                 }

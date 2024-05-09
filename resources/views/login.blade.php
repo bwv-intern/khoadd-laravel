@@ -17,10 +17,12 @@
                 rules: {
                     email: {
                         required: true,
+                        requiredHard: true,
                         email: true,
                     },
                     password: {
                         required: true,
+                        requiredHard: true,
                     }
                 }
             }

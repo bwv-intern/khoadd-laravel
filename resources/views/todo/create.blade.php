@@ -17,6 +17,7 @@
                 rules: {
                     todoText: {
                         required: true,
+                        requiredHard: true,
                     },
                 }
             }

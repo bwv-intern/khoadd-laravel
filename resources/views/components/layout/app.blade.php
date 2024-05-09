@@ -16,6 +16,23 @@
     <!-- jQueryvalidation -->
     <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/additional-methods.js" crossorigin="anonymous"></script>
+
+    <script type="module">
+        $.validator.addMethod("requiredHard", function(value, element) {
+            value = value ?? "";
+            // console.log(value);
+            // console.log(value? 1: 0);
+            // console.log(!value.split('').every(function(val) {
+            //     return val === " ";
+            // })? 1: 0);
+            // console.log((value !== "" && !value.split('').every(function(val) {
+            //     return val == " ";
+            // }))? "good" : "bad");
+            return this.optional(element) || (value !== "" && !value.split('').every(function(val) {
+                return val == " ";
+            }));
+        }, 'This field is required.');
+    </script>
 </head>
 
 <body>

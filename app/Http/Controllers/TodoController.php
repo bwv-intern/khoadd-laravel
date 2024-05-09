@@ -3,25 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Interfaces\ITodoRepository;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
+use Illuminate\Http\{Request, Response};
 use Illuminate\Validation\ValidationException;
 
 class TodoController extends Controller
 {
-
-    function __construct(private ITodoRepository $todoRepo)
-    {
+    public function __construct(private ITodoRepository $todoRepo) {
         // $todoRepo = new TodoRepository();
     }
 
-    public function viewTodoCreate(Request $request)
-    {
+    public function viewTodoCreate(Request $request) {
         return view('todo.create');
     }
 
-    public function submitTodoCreate(Request $request)
-    {
+    public function submitTodoCreate(Request $request) {
         $validated = $request->validate([
             'todoText' => 'required',
         ]);
@@ -32,13 +27,11 @@ class TodoController extends Controller
         return redirect()->route('viewTodo', ['id' => $todo['id']]);
     }
 
-    public function viewTodo(Request $request, int $id)
-    {
+    public function viewTodo(Request $request, int $id) {
         return view('todo.view', ['todo' => $this->todoRepo->get($id)]);
     }
 
-    public function viewAllTodos(Request $request)
-    {
+    public function viewAllTodos(Request $request) {
         $page = intval($request->query('page', 1));
         $limit = intval($request->query('limit', 10));
         $search = $request->query('search', '');
@@ -51,15 +44,12 @@ class TodoController extends Controller
         return view('todo.viewAll', compact('todoPaginator'));
     }
 
-    public function submitUpdateTodo(Request $request, int $id)
-    {
-        try{
+    public function submitUpdateTodo(Request $request, int $id) {
+        try {
             $validated = $request->validate([
                 'todoText' => 'required',
             ]);
-        }
-        catch (ValidationException $ve)
-        {
+        } catch (ValidationException $ve) {
             return response($ve->validator->errors()->first(), Response::HTTP_INTERNAL_SERVER_ERROR);
         }
 
@@ -68,15 +58,13 @@ class TodoController extends Controller
         return response(htmlspecialchars($todo->todoText));
     }
 
-    public function submitDeleteTodo(Request $request, int $id)
-    {
+    public function submitDeleteTodo(Request $request, int $id) {
         $this->todoRepo->delete($id);
 
         return response(status: Response::HTTP_NO_CONTENT);
     }
 
-    public function submitRestoreTodo(Request $request, int $id)
-    {
+    public function submitRestoreTodo(Request $request, int $id) {
         $this->todoRepo->restore($id);
 
         return response(status: Response::HTTP_NO_CONTENT);

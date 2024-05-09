@@ -20,8 +20,7 @@ Route::get('/', function () {
 
 Route::view('/home', 'home')->name('home');
 
-
-Route::middleware('guest')->group(function() {
+Route::middleware('guest')->group(function () {
     Route::get('/login', [AuthController::class, 'viewLogin'])->name('login');
     Route::post('/login', [AuthController::class, 'submitLogin']);
     Route::get('/register', [AuthController::class, 'viewRegister'])->name('register');

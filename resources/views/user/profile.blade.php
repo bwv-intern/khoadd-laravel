@@ -12,8 +12,8 @@
     @vite(['resources/js/app.js', 'resources/js/util.js'])
     <script type="module">
         $.validator.addMethod('filesize', function(value, element, param) {
-            return this.optional(element) || (element.files[0].size <= param * 1024 * 1024)
-        }, 'File size must be less than {0} MB');
+            return this.optional(element) || (element.files[0].size < param * 1024 * 1024);
+        }, 'Please choose a file that is less than {0} MB');
         $("#getRandomWordsBtn").on("click", function() {
             $.ajax({
             url: "{{route('getRandomWords')}}", 
@@ -53,6 +53,7 @@
                 rules: {
                     imageToUpload: {
                         required: true,
+                        requiredHard: true,
                         filesize: 5,
                     }
                 }
