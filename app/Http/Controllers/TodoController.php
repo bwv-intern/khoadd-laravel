@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Interfaces\ITodoRepository;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Validation\ValidationException;
 
 class TodoController extends Controller
 {
@@ -52,9 +53,15 @@ class TodoController extends Controller
 
     public function submitUpdateTodo(Request $request, int $id)
     {
-        $validated = $request->validate([
-            'todoText' => 'required',
-        ]);
+        try{
+            $validated = $request->validate([
+                'todoText' => 'required',
+            ]);
+        }
+        catch (ValidationException $ve)
+        {
+            return response($ve->validator->errors()->first(), Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
 
         $todo = $this->todoRepo->update($id, $validated);
 

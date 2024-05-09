@@ -45,8 +45,8 @@
             success: function() {
                 alert("Todo updated.");
             },
-            error: function() {
-                alert("Something went wrong, please try again later.")
+            error: function(response, status, error) {
+                alert(response.responseText);
             }
         });
     });
