@@ -56,9 +56,10 @@ class AuthController extends Controller
         //     return redirect('home');
         // }
 
-        return response(view('login'))->header('Cache-Control','nocache, no-store, max-age=0, must-revalidate')
-        ->header('Pragma','no-cache')
-        ->header('Expires','Fri, 01 Jan 1990 00:00:00 GMT');;
+        return response(view('login'));
+        // ->header('Cache-Control', 'nocache, no-store, max-age=0, must-revalidate')
+        //     ->header('Pragma', 'no-cache')
+        //     ->header('Expires', 'Fri, 01 Jan 1990 00:00:00 GMT');;
     }
 
     public function viewRegister(Request $request)
@@ -151,5 +152,27 @@ class AuthController extends Controller
         Storage::delete($oldImagePath);
 
         return redirect(route('profile'));
+    }
+
+    public function getRandomWords(Request $request)
+    {
+        $user = $request->user();
+
+        $randomWords = $user->randomly_generated_words;
+
+        if (empty($randomWords)) {
+            $randomWords = [];
+            $randomLength = rand(3, 7);
+            for ($i = 0; $i < $randomLength; $i++) {
+                $randomWords[] = str_replace([',','.'], '', mb_strtolower(fake()->realTextBetween(1, 15)));
+            }
+            $randomWords = encrypt(implode(' ', $randomWords));
+            $user->randomly_generated_words = $randomWords;
+            $user->save();
+        }
+
+        $decryptedRandomWords = decrypt($randomWords);
+
+        return response($decryptedRandomWords);
     }
 }

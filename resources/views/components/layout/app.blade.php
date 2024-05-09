@@ -21,3 +21,6 @@
 <body>
     <x-navbar></x-navbar>
     <x-alert></x-alert>
+    {{$slot}}
+</body>
+</html>
