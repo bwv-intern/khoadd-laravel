@@ -20,11 +20,13 @@ Route::get('/', function () {
 
 Route::view('/home', 'home')->name('home');
 
-Route::get('/login', [AuthController::class, 'viewLogin'])->name('login');
-Route::post('/login', [AuthController::class, 'submitLogin']);
-Route::get('/register', [AuthController::class, 'viewRegister'])->name('register');
-Route::post('/register', [AuthController::class, 'submitRegister']);
-Route::any('/logout', [AuthController::class, 'submitLogout'])->name('logout');
+Route::get('/login', [AuthController::class, 'viewLogin'])->middleware('guest')->name('login');
+Route::post('/login', [AuthController::class, 'submitLogin'])->middleware('guest');
+Route::get('/register', [AuthController::class, 'viewRegister'])->middleware('guest')->name('register');
+Route::post('/register', [AuthController::class, 'submitRegister'])->middleware('guest');
+Route::any('/logout', [AuthController::class, 'submitLogout'])->middleware('auth')->name('logout');
+Route::any('/profile', [AuthController::class, 'viewProfile'])->middleware('auth')->name('profile');
+Route::view('/lodash', 'lodash')->middleware('auth')->name('lodash');
 
 Route::get('/todos/new', [TodoController::class, 'viewTodoCreate'])->middleware('auth')->name('createTodo');
 Route::post('/todos/new', [TodoController::class, 'submitTodoCreate'])->middleware('auth');

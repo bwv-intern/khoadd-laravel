@@ -8,7 +8,7 @@
       <ul class="navbar-nav mr-auto">
         @auth
         <li class="nav-item">
-            <a class="nav-link">Hello, {{ Auth::user()['name']}}!</a>
+            <a class="nav-link" href="{{route('profile')}}">Hello, {{ Auth::user()['name']}}!</a>
         </li>
         
         <li class="nav-item">
@@ -28,6 +28,9 @@
         </li>
         <li class="nav-item">
             <a class="nav-link" href="{{route('validator')}}">Validator</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{route('lodash')}}">Lodash</a>
         </li>
       </ul>
     </div>
