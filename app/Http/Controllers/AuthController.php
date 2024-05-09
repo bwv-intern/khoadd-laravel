@@ -5,7 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\{Auth, Hash, Validator};
+use Illuminate\Http\Response;
+
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rules\Password;
 
 class AuthController extends Controller
@@ -51,7 +56,9 @@ class AuthController extends Controller
         //     return redirect('home');
         // }
 
-        return view('login');
+        return response(view('login'))->header('Cache-Control','nocache, no-store, max-age=0, must-revalidate')
+        ->header('Pragma','no-cache')
+        ->header('Expires','Fri, 01 Jan 1990 00:00:00 GMT');;
     }
 
     public function viewRegister(Request $request)
@@ -73,14 +80,76 @@ class AuthController extends Controller
         return redirect('home');
     }
 
-    public function viewProfile(Request $request) {
+    public function viewProfile(Request $request)
+    {
         if (!Auth::check()) {
             return redirect('home');
         }
 
         $user = Auth::user();
         $elapsedDays = $user->created_at->diff(Carbon::now())->days;
-        $currentTime = Carbon::now()->toISOString();
-        return view('user.profile', compact('user', 'elapsedDays', 'currentTime'));
+        $serverTime = Carbon::now()->toISOString();
+        $hasYourImage = !empty($user->image_path);
+        return view('user.profile', compact('user', 'elapsedDays', 'serverTime', 'hasYourImage'));
+    }
+
+    public function submitUploadYourImage(Request $request)
+    {
+        $request->validate([
+            'imageToUpload' => ['required', 'file', 'image', 'max:5120'],
+        ]);
+
+        DB::transaction(function () use ($request) {
+            $user = $request->user();
+
+            $oldImagePath = $user->image_path;
+            $filePath = $request->file('imageToUpload')->store('uploaded/images');
+
+            $user->image_path = $filePath;
+            $user->save();
+
+            // delete old image of user if it exists
+            if (!empty($oldImagePath)) {
+                Storage::delete($oldImagePath);
+            }
+        });
+
+        return redirect(route('profile'));
+    }
+
+    public function downloadYourImage(Request $request)
+    {
+        $user = $request->user();
+        $hasYourImage = !empty($user->image_path);
+
+        if (!$hasYourImage) {
+            return response('You have not uploaded your image.', Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+
+        return Storage::download($user->image_path);
+    }
+
+    /**
+     * Method to delete uploaded image. Unused for now since I can't think of a
+     * smooth way to make the delete link consistent with the current form.
+     */
+    public function deleteYourImage(Request $request)
+    {
+        $user = $request->user();
+        $hasYourImage = !empty($user->image_path);
+
+        if (!$hasYourImage) {
+            return response(
+                'You have not uploaded your image.',
+                Response::HTTP_INTERNAL_SERVER_ERROR
+            );
+        }
+
+        $oldImagePath = $user->image_path;
+        $user->image_path = "";
+        $user->save();
+        Storage::delete($oldImagePath);
+
+        return redirect(route('profile'));
     }
 }
