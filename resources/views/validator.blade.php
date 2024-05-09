@@ -16,7 +16,7 @@
             <input type="text" id="longName" name="longName" value="{{old('longName')}}">
           </p>
           <p>
-            <label for="anyString">Any string (required, between 5 and 20 characters, ascii alphanumerics only)</label>
+            <label for="anyString">Any string (required, between 5 and 20 characters)</label>
             <input id="anyString" type="text" name="anyString" value="{{old('anyString')}}">
           </p>
           <p>
