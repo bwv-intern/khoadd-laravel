@@ -23,7 +23,15 @@
     <!-- It is quality rather than quantity that matters. - Lucius Annaeus Seneca -->
 </div>
 
+@if(Auth::check() && Auth::user()->id === $todo['userId'])
 <script>
+    $("#todoText").keypress(function (e) {
+        if(e.which === 13 && !e.shiftKey) {
+            e.preventDefault();
+        
+           $("#updateBtn").trigger("click");
+        }
+    });
     $('#updateBtn').click(function () {
         let csrfToken = $('input[name="_token"]')[0].value;
         let newTodoText = $('#todoText').first().val();
@@ -89,3 +97,4 @@
         }});
     });
 </script>
+@endif
