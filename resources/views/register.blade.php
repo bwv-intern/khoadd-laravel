@@ -1,5 +1,4 @@
-<x-layout.app title="Signup"></x-layout.app>
-@section('content')
+<x-layout.app title="Signup">
 
 <div class="container">
     <h1>Register a new account</h1>
@@ -45,3 +44,5 @@
 
     <!-- It is quality rather than quantity that matters. - Lucius Annaeus Seneca -->
 </div>
+
+</x-layout.app>

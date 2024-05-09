@@ -1,5 +1,4 @@
-<x-layout.app title="Validator"></x-layout.app>
-@section('content')
+<x-layout.app title="Validator">
 
 <div class="container">
     <h1>Validation testing page</h1>
@@ -69,8 +68,8 @@
         jQuery.validator.addMethod("dateBefore2000", function(value, elm) {
             return this.optional(elm) || (Date.parse("01 Jan 2000") > new Date(value));
         }, "Please provide a time before the year 2000.");
-        $('#skipClientValidation').on("change", function () {
-          if ($('#skipClientValidation').prop('checked')) {
+        $("#skipClientValidation").on("change", function () {
+          if ($("#skipClientValidation").prop('checked')) {
             $("#validatorForm").validate().settings.ignore = "*";
           }
           else {
@@ -79,7 +78,7 @@
         })
         $("#validatorForm").validate(
         {
-            ignore: $('#skipClientValidation').prop('checked')? "*" : ":hidden",
+            ignore: $("#skipClientValidation").prop('checked')? "*" : ":hidden",
             rules: {
                 shortName: {
                     required: true,
@@ -125,3 +124,5 @@
       );
       </script>
 </div>
+
+</x-layout.app>

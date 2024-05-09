@@ -1,5 +1,4 @@
-<x-layout.app title="Todos"></x-layout.app>
-@section('content')
+<x-layout.app title="Todos">
 
 <div class="container">
     <h1>Todos</h1>
@@ -21,3 +20,5 @@
 
     <!-- It is quality rather than quantity that matters. - Lucius Annaeus Seneca -->
 </div>
+
+</x-layout.app>
