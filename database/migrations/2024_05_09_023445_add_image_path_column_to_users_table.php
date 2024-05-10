@@ -11,8 +11,8 @@ return new class () extends Migration {
     public function up(): void {
         DB::beginTransaction();
         try {
-            Schema::table('todos', function (Blueprint $table) {
-                $table->softDeletes();
+            Schema::table('users', function (Blueprint $table) {
+                $table->text('image_path');
             });
             DB::commit();
         } catch (Exception $e) {
@@ -28,7 +28,7 @@ return new class () extends Migration {
         DB::beginTransaction();
         try {
             Schema::table('todos', function (Blueprint $table) {
-                $table->dropSoftDeletes();
+                $table->dropColumn('image_path');
             });
             DB::commit();
         } catch (Exception $e) {

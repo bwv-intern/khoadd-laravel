@@ -1,5 +1,4 @@
-<x-layout.app title="Validator"></x-layout.app>
-@section('content')
+<x-layout.app title="Validator">
 
 <div class="container">
     <h1>Validation testing page</h1>
@@ -17,7 +16,7 @@
             <input type="text" id="longName" name="longName" value="{{old('longName')}}">
           </p>
           <p>
-            <label for="anyString">Any string (required, between 5 and 20 characters, ascii alphanumerics only)</label>
+            <label for="anyString">Any string (required, between 5 and 20 characters)</label>
             <input id="anyString" type="text" name="anyString" value="{{old('anyString')}}">
           </p>
           <p>
@@ -69,8 +68,8 @@
         jQuery.validator.addMethod("dateBefore2000", function(value, elm) {
             return this.optional(elm) || (Date.parse("01 Jan 2000") > new Date(value));
         }, "Please provide a time before the year 2000.");
-        $('#skipClientValidation').on("change", function () {
-          if ($('#skipClientValidation').prop('checked')) {
+        $("#skipClientValidation").on("change", function () {
+          if ($("#skipClientValidation").prop('checked')) {
             $("#validatorForm").validate().settings.ignore = "*";
           }
           else {
@@ -79,44 +78,52 @@
         })
         $("#validatorForm").validate(
         {
-            ignore: $('#skipClientValidation').prop('checked')? "*" : ":hidden",
+            ignore: $("#skipClientValidation").prop('checked')? "*" : ":hidden",
             rules: {
                 shortName: {
                     required: true,
+                    requiredHard: true,
                     lettersonlynd: true,
                     maxlength: 5,
                 },
                 longName: {
                     required: true,
+                    requiredHard: true,
                     lettersonlynd: true,
                     minlength: 10
                 },
                 anyString: {
                     required: true,
+                    requiredHard: true,
                     minlength: 5,
                     maxlength: 20,
                 },
                 url: {
                     required: true,
+                    requiredHard: true,
                     url: true,
                 },
                 spellcard: {
                     required: true,
+                    requiredHard: true,
                     maxlength: 50,
                     isSpellcard: true,
                 },
                 phone: {
                     required: true,
+                    requiredHard: true,
                     digits: true,
                     isVNPhone: true,
                 },
                 age: {
                     required: true,
+                    requiredHard: true,
                     digits: true,
                     min: 18,
                 },
                 dateOfBirth: {
                     required: true,
+                    requiredHard: true,
                     dateISO: true,
                     dateBefore2000: true,
                 }
@@ -125,3 +132,5 @@
       );
       </script>
 </div>
+
+</x-layout.app>

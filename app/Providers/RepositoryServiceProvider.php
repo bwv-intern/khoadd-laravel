@@ -11,16 +11,13 @@ class RepositoryServiceProvider extends ServiceProvider
     /**
      * Register services.
      */
-    public function register(): void
-    {
+    public function register(): void {
         $this->app->bind(ITodoRepository::class, TodoRepository::class);
     }
 
     /**
      * Bootstrap services.
      */
-    public function boot(): void
-    {
-        //
+    public function boot(): void {
     }
 }

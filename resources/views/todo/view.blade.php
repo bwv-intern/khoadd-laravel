@@ -1,5 +1,4 @@
-<x-layout.app :title="'Todo #' . $todo['id']"></x-layout.app>
-@section('content')
+<x-layout.app :title="'Todo #' . $todo['id']">
 
 <div class="container">
     <h1>Todo #{{$todo['id']}}</h1>
@@ -23,10 +22,18 @@
     <!-- It is quality rather than quantity that matters. - Lucius Annaeus Seneca -->
 </div>
 
+@if(Auth::check() && Auth::user()->id === $todo['userId'])
 <script>
-    $('#updateBtn').click(function () {
-        let csrfToken = $('input[name="_token"]')[0].value;
-        let newTodoText = $('#todoText').first().val();
+    $("#todoText").keypress(function (e) {
+        if(e.which === 13 && !e.shiftKey) {
+            e.preventDefault();
+        
+           $("#updateBtn").trigger("click");
+        }
+    });
+    $("#updateBtn").click(function () {
+        let csrfToken = $("input[name="_token"]")[0].value;
+        let newTodoText = $("#todoText").first().val();
         $.ajax({
             url: "{{route('updateTodo', ['id' => $todo['id']])}}", 
             type: "put", 
@@ -35,23 +42,23 @@
                 todoText: newTodoText,
             },
             beforeSend: function() {
-                $('#spinner').show();
-                $('#buttonRow').hide();
+                $("#spinner").show();
+                $("#buttonRow").hide();
             },
             complete: function() {
-                $('#spinner').hide();
-                $('#buttonRow').show();
+                $("#spinner").hide();
+                $("#buttonRow").show();
             },
             success: function() {
                 alert("Todo updated.");
             },
-            error: function() {
-                alert("Something went wrong, please try again later.")
+            error: function(response, status, error) {
+                alert(response.responseText);
             }
         });
     });
-    $('#deleteBtn').click(function () {
-        let csrfToken = $('input[name="_token"]')[0].value;
+    $("#deleteBtn").click(function () {
+        let csrfToken = $("input[name="_token"]")[0].value;
         $.ajax({url: "{{route('deleteTodo', ['id' => $todo['id']])}}", 
         type: "delete", 
         data: {
@@ -61,16 +68,16 @@
             location.reload();
         },
         beforeSend: function() {
-            $('#spinner').show();
-            $('#buttonRow').hide();
+            $("#spinner").show();
+            $("#buttonRow").hide();
         },
         error: function() {
-                $('#spinner').hide();
-                $('#buttonRow').show();
+                $("#spinner").hide();
+                $("#buttonRow").show();
             }});
     });
-    $('#restoreBtn').click(function () {
-        let csrfToken = $('input[name="_token"]')[0].value;
+    $("#restoreBtn").click(function () {
+        let csrfToken = $("input[name="_token"]")[0].value;
         $.ajax({url: "{{route('restoreTodo', ['id' => $todo['id']])}}", 
         type: "post", 
         data: {
@@ -80,12 +87,15 @@
             location.reload();
         },
         beforeSend: function() {
-            $('#spinner').show();
-            $('#buttonRow').hide();
+            $("#spinner").show();
+            $("#buttonRow").hide();
         },
         error: function() {
-            $('#spinner').hide();
-            $('#buttonRow').show();
+            $("#spinner").hide();
+            $("#buttonRow").show();
         }});
     });
 </script>
+@endif
+
+</x-layout.app>

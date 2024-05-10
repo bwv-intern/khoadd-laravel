@@ -1,7 +1,4 @@
-<x-layout.app title="Profile"></x-layout.app>
-@section('content')
-
-{{-- <script src="/public/storage/test.js"></script> --}}
+<x-layout.app title="Profile">
 
 <div class="container">
     <h1>Lodash test page</h1>
@@ -48,3 +45,5 @@
         })
     </script>
 </div>
+
+</x-layout.app>

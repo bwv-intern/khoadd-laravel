@@ -1,4 +1,4 @@
-<div id='alert'>
+<div id="alert">
     @if($errors->any())
     <div class="alert alert-danger">
         <h2>

@@ -1,5 +1,5 @@
-<x-layout.app title="Create a todo"></x-layout.app>
-@section('content')
+<x-layout.app title="Create a todo">
+
 <div class="container">
     <h1>Have something on your mind?</h1>
     <form action="{{route('createTodo')}}" method="post" id="createTodoForm">
@@ -17,6 +17,7 @@
                 rules: {
                     todoText: {
                         required: true,
+                        requiredHard: true,
                     },
                 }
             }
@@ -35,3 +36,5 @@
     }
 });
 </script>
+
+</x-layout.app>

@@ -1,5 +1,4 @@
-<x-layout.app title="Login"></x-layout.app>
-@section('content')
+<x-layout.app title="Login">
 
 <div class="container">
     <h1>Log in to your account</h1>
@@ -18,10 +17,12 @@
                 rules: {
                     email: {
                         required: true,
+                        requiredHard: true,
                         email: true,
                     },
                     password: {
                         required: true,
+                        requiredHard: true,
                     }
                 }
             }
@@ -30,3 +31,5 @@
 
     <!-- It is quality rather than quantity that matters. - Lucius Annaeus Seneca -->
 </div>
+
+</x-layout.app>
