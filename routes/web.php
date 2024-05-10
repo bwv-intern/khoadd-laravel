@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\{AuthController, TodoController, ValidatorController};
+use App\Http\Controllers\{AdminController, AuthController, TodoController, ValidatorController};
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -48,3 +48,8 @@ Route::post('/todos/restore/{id}', [TodoController::class, 'submitRestoreTodo'])
 Route::view('/validator', 'validator')->name('validator');
 Route::post('/validatorCheck', [ValidatorController::class, 'submitForm'])->name('validatorSubmit');
 Route::view('/lodash', 'lodash')->middleware('auth')->name('lodash');
+
+// should only be accessed from an admin route but this is a demo and I'm almost out of time so public weeee
+Route::get('/admin', [AdminController::class, 'viewAdmin'])->name('admin');
+Route::get('/admin/export-users', [AdminController::class, 'exportUsers'])->name('adminExportUsers');
+Route::post('/admin/export-users', [AdminController::class, 'importUsers'])->name('adminImportUsers');
